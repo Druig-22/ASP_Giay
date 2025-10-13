@@ -70,7 +70,7 @@
             this.groupBox1.Size = new System.Drawing.Size(887, 302);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Danh sách sản phẩm";
+            this.groupBox1.Text = "Danh sách giày";
             // 
             // label2
             // 
@@ -79,9 +79,9 @@
             this.label2.ForeColor = System.Drawing.Color.Red;
             this.label2.Location = new System.Drawing.Point(19, 43);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(161, 25);
+            this.label2.Size = new System.Drawing.Size(148, 25);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Tìm sản phẩm: ";
+            this.label2.Text = "Tìm sản phẩm";
             // 
             // button1
             // 
@@ -97,9 +97,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(198, 50);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(123, 16);
+            this.label3.Size = new System.Drawing.Size(93, 16);
             this.label3.TabIndex = 11;
-            this.label3.Text = "Theo loại hàng hóa";
+            this.label3.Text = "Theo loại giày";
             // 
             // textBox1
             // 
@@ -182,7 +182,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ProductUI";
-            this.Text = "Sản phẩm";
+            this.Text = "Giày";
             this.Load += new System.EventHandler(this.ProductUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProduct)).EndInit();
             this.groupBox1.ResumeLayout(false);

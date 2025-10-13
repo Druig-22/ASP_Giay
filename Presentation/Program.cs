@@ -15,7 +15,13 @@ namespace Presentation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            // Chạy form Login trước
+            LoginUI login = new LoginUI();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new Form1()); // Mở form chính sau khi login thành công
+            }
         }
     }
 }
