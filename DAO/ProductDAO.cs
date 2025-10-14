@@ -10,7 +10,7 @@ namespace DAO
         public List<Product> GetData()
         {
             List<Product> list = new List<Product>();
-            string sql = "SELECT MaGiay, TenGiay, MaLoaiGiay, MaTH, Size, MauSac, DonGia, SoLuongTon, HinhAnh FROM Giay";
+            string sql = "SELECT * FROM GIAY";
 
             try
             {
@@ -20,24 +20,22 @@ namespace DAO
 
                 while (dr.Read())
                 {
-                    string maGiay = dr["MaGiay"].ToString().Trim();
-                    string tenGiay = dr["TenGiay"].ToString().Trim();
-                    string maLoaiGiay = dr["MaLoaiGiay"].ToString().Trim();
-                    string maTH = dr["MaTH"].ToString().Trim();
-                    int size = dr["Size"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Size"]);
-                    string mauSac = dr["MauSac"].ToString().Trim();
-                    double donGia = dr["DonGia"] == DBNull.Value ? 0 : Convert.ToDouble(dr["DonGia"]);
-                    int soLuongTon = dr["SoLuongTon"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoLuongTon"]);
-                    string hinhAnh = dr["HinhAnh"] == DBNull.Value ? "" : dr["HinhAnh"].ToString().Trim();
-
-                    list.Add(new Product(maGiay, tenGiay, maLoaiGiay, maTH, size, mauSac, donGia, soLuongTon, hinhAnh));
+                    list.Add(new Product(
+                        dr["MaGiay"].ToString(),
+                        dr["TenGiay"].ToString(),
+                        dr["MaLoaiGiay"].ToString(),
+                        dr["MaTH"].ToString(),
+                        Convert.ToInt32(dr["Size"]),
+                        dr["MauSac"].ToString(),
+                        Convert.ToDecimal(dr["DonGia"]),
+                        Convert.ToInt32(dr["SoLuongTon"])
+                    ));
                 }
-
                 dr.Close();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                throw new Exception("Lỗi truy vấn bảng Giay: " + ex.Message);
+                throw new Exception("Lỗi truy vấn bảng GIAY: " + ex.Message);
             }
             finally
             {
@@ -45,6 +43,111 @@ namespace DAO
             }
 
             return list;
+        }
+
+        public bool Exists(string ma)
+        {
+            string sql = "SELECT COUNT(*) FROM GIAY WHERE MaGiay = @ma";
+            try
+            {
+                Connect();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", ma);
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            finally
+            {
+                DisConnect();
+            }
+        }
+
+        public bool Insert(Product p)
+        {
+            string sql = @"INSERT INTO GIAY (MaGiay, TenGiay, MaLoaiGiay, MaTH, Size, MauSac, DonGia, SoLuongTon)
+                           VALUES (@ma, @ten, @maloai, @math, @size, @mau, @gia, @ton)";
+            try
+            {
+                Connect();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", p.MaGiay);
+                cmd.Parameters.AddWithValue("@ten", p.TenGiay);
+                cmd.Parameters.AddWithValue("@maloai", p.MaLoaiGiay);
+                cmd.Parameters.AddWithValue("@math", p.MaTH);
+                cmd.Parameters.AddWithValue("@size", p.Size);
+                cmd.Parameters.AddWithValue("@mau", p.MauSac);
+                cmd.Parameters.AddWithValue("@gia", p.DonGia);
+                cmd.Parameters.AddWithValue("@ton", p.SoLuongTon);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi thêm giày: " + ex.Message);
+            }
+            finally
+            {
+                DisConnect();
+            }
+        }
+
+        public bool Update(Product p)
+        {
+            string sql = @"UPDATE GIAY SET TenGiay=@ten, MaLoaiGiay=@maloai, MaTH=@math, 
+                           Size=@size, MauSac=@mau, DonGia=@gia, SoLuongTon=@ton WHERE MaGiay=@ma";
+            try
+            {
+                Connect();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", p.MaGiay);
+                cmd.Parameters.AddWithValue("@ten", p.TenGiay);
+                cmd.Parameters.AddWithValue("@maloai", p.MaLoaiGiay);
+                cmd.Parameters.AddWithValue("@math", p.MaTH);
+                cmd.Parameters.AddWithValue("@size", p.Size);
+                cmd.Parameters.AddWithValue("@mau", p.MauSac);
+                cmd.Parameters.AddWithValue("@gia", p.DonGia);
+                cmd.Parameters.AddWithValue("@ton", p.SoLuongTon);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            finally
+            {
+                DisConnect();
+            }
+        }
+
+        public bool Delete(string ma)
+        {
+            string sql = "DELETE FROM GIAY WHERE MaGiay=@ma";
+            try
+            {
+                Connect();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", ma);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            finally
+            {
+                DisConnect();
+            }
+        }
+        public bool UpdateStock(string maGiay, int soLuongBan)
+        {
+            try
+            {
+                Connect();
+                string sql = "UPDATE GIAY SET SoLuongTon = SoLuongTon - @soluong WHERE MaGiay = @ma";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", maGiay);
+                cmd.Parameters.AddWithValue("@soluong", soLuongBan);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi cập nhật tồn kho: " + ex.Message);
+            }
+            finally
+            {
+                DisConnect();
+            }
         }
     }
 }

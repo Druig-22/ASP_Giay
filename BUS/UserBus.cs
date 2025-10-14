@@ -1,4 +1,4 @@
-﻿using DAO.DAO;
+﻿using DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace BUS
     {
         UserDAO dao = new UserDAO();
 
-        public bool Login(string user, string pass)
+        public (string MaNV, string HoTen)? Login(string username, string password)
         {
-            return dao.CheckLogin(user, pass);
+            return dao.CheckLogin(username, password);
         }
     }
 }

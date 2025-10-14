@@ -13,7 +13,12 @@ namespace Presentation
 {
     public partial class LoginUI : Form
     {
-        UserBUS bus = new UserBUS();
+
+        public static string currentMaNV = "";
+        public static string currentTenNV = "";
+
+
+        UserBUS userBus = new UserBUS();
         public LoginUI()
         {
             InitializeComponent();
@@ -34,29 +39,24 @@ namespace Presentation
             string username = txtUser.Text.Trim();
             string password = txtPass.Text.Trim();
 
-            if (username == "" || password == "")
-            {
-                MessageBox.Show("Vui lòng nhập tên đăng nhập và mật khẩu!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            var result = userBus.Login(username, password);
 
-            bool success = bus.Login(username, password);
-            if (success)
+            if (result != null)
             {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                currentMaNV = result.Value.MaNV;
+                currentTenNV = result.Value.HoTen;
 
+                // Mở form chính
                 this.Hide();
-                Form1 frm = new Form1();
-                frm.ShowDialog();
-                this.Close();
+                Form1 main = new Form1();
+                main.ShowDialog();
+                this.Show();
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi",
+                MessageBox.Show("Sai tài khoản hoặc mật khẩu!", "Lỗi đăng nhập",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }   
+            }
         }
     }
 }

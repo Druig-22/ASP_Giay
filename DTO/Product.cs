@@ -13,13 +13,13 @@ namespace DTO
         public string MaTH { get; set; }
         public int Size { get; set; }
         public string MauSac { get; set; }
-        public double DonGia { get; set; }
+        public decimal DonGia { get; set; }
         public int SoLuongTon { get; set; }
-        public string HinhAnh { get; set; }
 
         public Product() { }
 
-        public Product(string maGiay, string tenGiay, string maLoaiGiay, string maTH, int size, string mauSac, double donGia, int soLuongTon, string hinhAnh)
+        public Product(string maGiay, string tenGiay, string maLoaiGiay, string maTH,
+                       int size, string mauSac, decimal donGia, int soLuongTon)
         {
             MaGiay = maGiay;
             TenGiay = tenGiay;
@@ -29,7 +29,6 @@ namespace DTO
             MauSac = mauSac;
             DonGia = donGia;
             SoLuongTon = soLuongTon;
-            HinhAnh = hinhAnh;
         }
     }
 }

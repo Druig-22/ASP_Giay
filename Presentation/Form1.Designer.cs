@@ -75,7 +75,8 @@
             // 
             this.customerToolStripMenuItem.Name = "customerToolStripMenuItem";
             this.customerToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.customerToolStripMenuItem.Text = "Khách hàng";
+            this.customerToolStripMenuItem.Text = "Hóa đơn";
+            this.customerToolStripMenuItem.Click += new System.EventHandler(this.customerToolStripMenuItem_Click);
             // 
             // Form1
             // 

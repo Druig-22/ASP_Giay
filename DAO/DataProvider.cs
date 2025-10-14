@@ -7,7 +7,6 @@ namespace DAO
 {
     public class DataProvider
     {
-        // ✅ Đổi từ private → protected
         protected SqlConnection conn;
 
         public DataProvider()
@@ -27,5 +26,27 @@ namespace DAO
             if (conn != null && conn.State != ConnectionState.Closed)
                 conn.Close();
         }
+        public bool Exists(string maLoaiGiay)
+        {
+            try
+            {
+                Connect();
+                string sql = "SELECT COUNT(*) FROM LOAIGIAY WHERE MaLoaiGiay = @ma";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ma", maLoaiGiay);
+
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi kiểm tra mã loại giày: " + ex.Message);
+            }
+            finally
+            {
+                DisConnect();
+            }
+        }
+
     }
 }

@@ -43,9 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryBUS.cs" />
+    <Compile Include="CTHoaDonBUS.cs" />
+    <Compile Include="HoaDonBUS.cs" />
     <Compile Include="ProductBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserBus.cs" />
+    <Compile Include="UserBUS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">

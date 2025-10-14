@@ -12,10 +12,10 @@ namespace DTO
 
         public Category() { }
 
-        public Category(string maLoaiGiay, string tenLoaiGiay)
+        public Category(string ma, string ten)
         {
-            MaLoaiGiay = maLoaiGiay;
-            TenLoaiGiay = tenLoaiGiay;
+            MaLoaiGiay = ma;
+            TenLoaiGiay = ten;
         }
     }
 }

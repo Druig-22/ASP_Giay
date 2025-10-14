@@ -33,5 +33,12 @@ namespace Presentation
             product.MdiParent = this;
             product.Show();
         }
+
+        private void customerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HoaDonUI invoice = new HoaDonUI();
+            invoice.MdiParent = this;
+            invoice.Show();
+        }
     }
 }
