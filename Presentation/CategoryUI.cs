@@ -52,6 +52,13 @@ namespace Presentation
         {
             dgvCategory.DataSource = bus.GetData();
 
+            //  Đặt tên hiển thị cho các cột trong DataGridView
+            if (dgvCategory.Columns.Contains("MaLoaiGiay"))
+                dgvCategory.Columns["MaLoaiGiay"].HeaderText = "Mã loại giày";
+            if (dgvCategory.Columns.Contains("TenLoaiGiay"))
+                dgvCategory.Columns["TenLoaiGiay"].HeaderText = "Tên loại giày";
+
+            //  Load dữ liệu vào textbox nếu có
             if (dgvCategory.Rows.Count > 0)
             {
                 dgvCategory.ClearSelection();
@@ -63,21 +70,6 @@ namespace Presentation
             {
                 txtMaLoaiGiay.Clear();
                 txtTenLoaiGiay.Clear();
-            }
-        }
-
-        private void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                // chọn toàn dòng
-                dgvCategory.ClearSelection();
-                dgvCategory.Rows[e.RowIndex].Selected = true;
-                dgvCategory.CurrentCell = dgvCategory.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                // lấy dữ liệu hiển thị sang textbox
-                txtMaLoaiGiay.Text = dgvCategory.Rows[e.RowIndex].Cells["MaLoaiGiay"].Value.ToString();
-                txtTenLoaiGiay.Text = dgvCategory.Rows[e.RowIndex].Cells["TenLoaiGiay"].Value.ToString();
             }
         }
 
@@ -193,6 +185,21 @@ namespace Presentation
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvCategory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // chọn toàn dòng
+                dgvCategory.ClearSelection();
+                dgvCategory.Rows[e.RowIndex].Selected = true;
+                dgvCategory.CurrentCell = dgvCategory.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                // lấy dữ liệu hiển thị sang textbox
+                txtMaLoaiGiay.Text = dgvCategory.Rows[e.RowIndex].Cells["MaLoaiGiay"].Value.ToString();
+                txtTenLoaiGiay.Text = dgvCategory.Rows[e.RowIndex].Cells["TenLoaiGiay"].Value.ToString();
+            }
         }
     }
 }

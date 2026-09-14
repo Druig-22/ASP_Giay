@@ -48,20 +48,23 @@
             // dgvCategory
             // 
             this.dgvCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCategory.Location = new System.Drawing.Point(26, 34);
+            this.dgvCategory.Location = new System.Drawing.Point(20, 28);
+            this.dgvCategory.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCategory.Name = "dgvCategory";
             this.dgvCategory.RowHeadersWidth = 51;
             this.dgvCategory.RowTemplate.Height = 24;
-            this.dgvCategory.Size = new System.Drawing.Size(628, 379);
+            this.dgvCategory.Size = new System.Drawing.Size(471, 308);
             this.dgvCategory.TabIndex = 0;
-            this.dgvCategory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategory_CellContentClick);
+            this.dgvCategory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategory_CellClick);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvCategory);
-            this.groupBox1.Location = new System.Drawing.Point(23, 12);
+            this.groupBox1.Location = new System.Drawing.Point(17, 10);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(684, 529);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(513, 430);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh sách loại sản phẩm";
@@ -78,9 +81,11 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.txtMaLoaiGiay);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(739, 14);
+            this.groupBox2.Location = new System.Drawing.Point(554, 11);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(458, 527);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(344, 428);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Loại sản phẩm";
@@ -88,9 +93,10 @@
             // 
             // btnHuy
             // 
-            this.btnHuy.Location = new System.Drawing.Point(227, 266);
+            this.btnHuy.Location = new System.Drawing.Point(170, 216);
+            this.btnHuy.Margin = new System.Windows.Forms.Padding(2);
             this.btnHuy.Name = "btnHuy";
-            this.btnHuy.Size = new System.Drawing.Size(91, 42);
+            this.btnHuy.Size = new System.Drawing.Size(68, 34);
             this.btnHuy.TabIndex = 10;
             this.btnHuy.Text = "Hủy";
             this.btnHuy.UseVisualStyleBackColor = true;
@@ -98,9 +104,10 @@
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(107, 266);
+            this.btnXoa.Location = new System.Drawing.Point(80, 216);
+            this.btnXoa.Margin = new System.Windows.Forms.Padding(2);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(91, 42);
+            this.btnXoa.Size = new System.Drawing.Size(68, 34);
             this.btnXoa.TabIndex = 9;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = true;
@@ -108,9 +115,10 @@
             // 
             // btnLuu
             // 
-            this.btnLuu.Location = new System.Drawing.Point(275, 203);
+            this.btnLuu.Location = new System.Drawing.Point(206, 165);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(2);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(91, 42);
+            this.btnLuu.Size = new System.Drawing.Size(68, 34);
             this.btnLuu.TabIndex = 8;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = true;
@@ -118,9 +126,10 @@
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(160, 203);
+            this.btnSua.Location = new System.Drawing.Point(120, 165);
+            this.btnSua.Margin = new System.Windows.Forms.Padding(2);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(91, 42);
+            this.btnSua.Size = new System.Drawing.Size(68, 34);
             this.btnSua.TabIndex = 7;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
@@ -128,9 +137,10 @@
             // 
             // btnThem
             // 
-            this.btnThem.Location = new System.Drawing.Point(46, 203);
+            this.btnThem.Location = new System.Drawing.Point(34, 165);
+            this.btnThem.Margin = new System.Windows.Forms.Padding(2);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(91, 42);
+            this.btnThem.Size = new System.Drawing.Size(68, 34);
             this.btnThem.TabIndex = 6;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
@@ -138,43 +148,48 @@
             // 
             // txtTenLoaiGiay
             // 
-            this.txtTenLoaiGiay.Location = new System.Drawing.Point(37, 141);
+            this.txtTenLoaiGiay.Location = new System.Drawing.Point(28, 115);
+            this.txtTenLoaiGiay.Margin = new System.Windows.Forms.Padding(2);
             this.txtTenLoaiGiay.Name = "txtTenLoaiGiay";
-            this.txtTenLoaiGiay.Size = new System.Drawing.Size(100, 22);
+            this.txtTenLoaiGiay.Size = new System.Drawing.Size(76, 20);
             this.txtTenLoaiGiay.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(34, 113);
+            this.label5.Location = new System.Drawing.Point(26, 92);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(125, 16);
+            this.label5.Size = new System.Drawing.Size(101, 13);
             this.label5.TabIndex = 2;
             this.label5.Text = "Tên Loại Sản Phẩm";
             // 
             // txtMaLoaiGiay
             // 
-            this.txtMaLoaiGiay.Location = new System.Drawing.Point(37, 72);
+            this.txtMaLoaiGiay.Location = new System.Drawing.Point(28, 58);
+            this.txtMaLoaiGiay.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaLoaiGiay.Name = "txtMaLoaiGiay";
-            this.txtMaLoaiGiay.Size = new System.Drawing.Size(100, 22);
+            this.txtMaLoaiGiay.Size = new System.Drawing.Size(76, 20);
             this.txtMaLoaiGiay.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(34, 44);
+            this.label4.Location = new System.Drawing.Point(26, 36);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 16);
+            this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 0;
             this.label4.Text = "Mã Loại Sản Phẩm";
             // 
             // CategoryUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1204, 637);
+            this.ClientSize = new System.Drawing.Size(903, 518);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CategoryUI";
             this.Text = "Loại sản phẩm";
             this.Load += new System.EventHandler(this.CategoryUI_Load);

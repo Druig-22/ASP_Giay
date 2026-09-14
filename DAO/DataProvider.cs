@@ -7,8 +7,9 @@ namespace DAO
 {
     public class DataProvider
     {
+      
         protected SqlConnection conn;
-
+   
         public DataProvider()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["QLBHConnectionString"].ConnectionString;
@@ -26,6 +27,7 @@ namespace DAO
             if (conn != null && conn.State != ConnectionState.Closed)
                 conn.Close();
         }
+
         public bool Exists(string maLoaiGiay)
         {
             try
@@ -48,5 +50,21 @@ namespace DAO
             }
         }
 
+        //  Thêm hàm thực thi query đơn giản nếu cần
+        public DataTable ExecuteQuery(string query)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Connect();
+                SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                da.Fill(dt);
+            }
+            finally
+            {
+                DisConnect();
+            }
+            return dt;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Presentation
         CategoryBUS catBus = new CategoryBUS();
         bool isAdd = false;
 
-
+        public static event Action OnProductAdded;
         public ProductUI()
         {
             InitializeComponent();
@@ -32,35 +32,14 @@ namespace Presentation
             LoadData();
             SetControlState(false);
         }
-        private List<string> GetBrandIDs()
-        {
-            List<string> brandList = new List<string>();
-            string connectionString = ConfigurationManager.ConnectionStrings["QLBHConnectionString"].ConnectionString;
-            string sql = "SELECT MaTH FROM THUONGHIEU";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    brandList.Add(dr["MaTH"].ToString());
-                }
-
-                dr.Close();
-            }
-
-            return brandList;
-        }
 
         private void SetControlState(bool editing)
         {
             txtMaGiay.Enabled = editing;
             txtTenGiay.Enabled = editing;
             cboLoaiGiay.Enabled = editing;
-            cboThuongHieu.Enabled = editing;
+            txtMaTH.Enabled = editing;
+            txtTenTH.Enabled = editing;
             txtSize.Enabled = editing;
             txtMauSac.Enabled = editing;
             txtDonGia.Enabled = editing;
@@ -80,39 +59,47 @@ namespace Presentation
             dgvProduct.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProduct.MultiSelect = false;
             dgvProduct.ClearSelection();
-
             dgvProduct.ReadOnly = true;
             dgvProduct.AllowUserToAddRows = false;
             dgvProduct.AllowUserToDeleteRows = false;
+
+            if (dgvProduct.Columns.Contains("MaGiay"))
+                dgvProduct.Columns["MaGiay"].HeaderText = "Mã giày";
+            if (dgvProduct.Columns.Contains("TenGiay"))
+                dgvProduct.Columns["TenGiay"].HeaderText = "Tên giày";
+            if (dgvProduct.Columns.Contains("MaLoaiGiay"))
+                dgvProduct.Columns["MaLoaiGiay"].HeaderText = "Mã loại giày";
+            if (dgvProduct.Columns.Contains("TenLoaiGiay"))
+                dgvProduct.Columns["TenLoaiGiay"].HeaderText = "Tên loại giày";
+            if (dgvProduct.Columns.Contains("MaTH"))
+                dgvProduct.Columns["MaTH"].HeaderText = "Mã thương hiệu";
+            if (dgvProduct.Columns.Contains("TenTH"))
+                dgvProduct.Columns["TenTH"].HeaderText = "Tên thương hiệu";
+            if (dgvProduct.Columns.Contains("Size"))
+                dgvProduct.Columns["Size"].HeaderText = "Kích cỡ";
+            if (dgvProduct.Columns.Contains("MauSac"))
+                dgvProduct.Columns["MauSac"].HeaderText = "Màu sắc";
+            if (dgvProduct.Columns.Contains("DonGia"))
+            {
+                dgvProduct.Columns["DonGia"].HeaderText = "Đơn giá (VNĐ)";
+                dgvProduct.Columns["DonGia"].DefaultCellStyle.Format = "c0";
+                dgvProduct.Columns["DonGia"].DefaultCellStyle.FormatProvider = new System.Globalization.CultureInfo("vi-VN");
+            }
+            if (dgvProduct.Columns.Contains("SoLuongTon"))
+                dgvProduct.Columns["SoLuongTon"].HeaderText = "Số lượng tồn";
         }
 
         private void LoadCombos()
         {
+            // Chỉ còn combo loại giày
             cboLoaiGiay.DataSource = catBus.GetData();
-            cboLoaiGiay.DisplayMember = "TenLoaiGiay";
+            cboLoaiGiay.DisplayMember = "MaLoaiGiay";
             cboLoaiGiay.ValueMember = "MaLoaiGiay";
-
-            // Thương hiệu – chỉ lấy mã
-            cboThuongHieu.DataSource = GetBrandIDs();
         }
 
         private void dgvProduct_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                var r = dgvProduct.Rows[e.RowIndex];
-                txtMaGiay.Text = r.Cells["MaGiay"].Value.ToString();
-                txtTenGiay.Text = r.Cells["TenGiay"].Value.ToString();
-                cboLoaiGiay.SelectedValue = r.Cells["MaLoaiGiay"].Value.ToString();
-                cboThuongHieu.SelectedItem = r.Cells["MaTH"].Value.ToString();
-                txtSize.Text = r.Cells["Size"].Value.ToString();
-                txtMauSac.Text = r.Cells["MauSac"].Value.ToString();
-                txtDonGia.Text = r.Cells["DonGia"].Value.ToString();
-                txtSoLuongTon.Text = r.Cells["SoLuongTon"].Value.ToString();
-
-                dgvProduct.ClearSelection();
-                dgvProduct.Rows[e.RowIndex].Selected = true;
-            }
+            
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -171,32 +158,70 @@ namespace Presentation
                 txtMaGiay.Text.Trim(),
                 txtTenGiay.Text.Trim(),
                 cboLoaiGiay.SelectedValue.ToString(),
-                cboThuongHieu.SelectedItem.ToString(),
+                txtMaTH.Text.Trim(),
                 int.Parse(txtSize.Text),
                 txtMauSac.Text.Trim(),
                 decimal.Parse(txtDonGia.Text),
-                int.Parse(txtSoLuongTon.Text)
+                int.Parse(txtSoLuongTon.Text),
+                txtTenTH.Text.Trim()
             );
+
+            bool success = false;
 
             if (isAdd)
             {
-                if (productBus.Insert(p))
+                success = productBus.Insert(p);
+                if (success)
                 {
-                    MessageBox.Show("Thêm thành công!");
-                    LoadData();
+                    MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
-                    MessageBox.Show("Thêm thất bại hoặc mã giày đã tồn tại!");
+                {
+                    MessageBox.Show("Thêm thất bại hoặc mã giày đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             else
             {
-                if (productBus.Update(p))
+                success = productBus.Update(p);
+                if (success)
                 {
-                    MessageBox.Show("Cập nhật thành công!");
-                    LoadData();
+                    MessageBox.Show("Cập nhật sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
-                    MessageBox.Show("Cập nhật thất bại!");
+                {
+                    MessageBox.Show("Cập nhật thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            //  Nếu thao tác thành công → load lại dữ liệu mới nhất
+            if (success)
+            {
+                LoadData();
+
+                //  Giữ lại dòng vừa được thêm/cập nhật
+                foreach (DataGridViewRow row in dgvProduct.Rows)
+                {
+                    if (row.Cells["MaGiay"].Value.ToString() == p.MaGiay)
+                    {
+                        dgvProduct.ClearSelection();
+                        row.Selected = true;
+                        dgvProduct.FirstDisplayedScrollingRowIndex = row.Index;
+
+                        // Cập nhật textbox để hiển thị lại dữ liệu mới
+                        txtMaGiay.Text = row.Cells["MaGiay"].Value.ToString();
+                        txtTenGiay.Text = row.Cells["TenGiay"].Value.ToString();
+                        cboLoaiGiay.SelectedValue = row.Cells["MaLoaiGiay"].Value.ToString();
+                        txtMaTH.Text = row.Cells["MaTH"].Value.ToString();
+                        txtTenTH.Text = row.Cells["TenTH"].Value.ToString();
+                        txtSize.Text = row.Cells["Size"].Value.ToString();
+                        txtMauSac.Text = row.Cells["MauSac"].Value.ToString();
+                        txtDonGia.Text = row.Cells["DonGia"].Value.ToString();
+                        txtSoLuongTon.Text = row.Cells["SoLuongTon"].Value.ToString();
+                        break;
+                    }
+                }
             }
 
             SetControlState(false);
@@ -212,11 +237,52 @@ namespace Presentation
             txtMaGiay.Clear();
             txtTenGiay.Clear();
             cboLoaiGiay.SelectedIndex = -1;
-            cboThuongHieu.SelectedIndex = -1;
+            txtMaTH.Clear();
+            txtTenTH.Clear();
             txtSize.Clear();
             txtMauSac.Clear();
             txtDonGia.Clear();
             txtSoLuongTon.Clear();
+        }
+
+        private void dgvProduct_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var r = dgvProduct.Rows[e.RowIndex];
+                txtMaGiay.Text = r.Cells["MaGiay"].Value.ToString();
+                txtTenGiay.Text = r.Cells["TenGiay"].Value.ToString();
+                cboLoaiGiay.SelectedValue = r.Cells["MaLoaiGiay"].Value.ToString();
+                txtMaTH.Text = r.Cells["MaTH"].Value.ToString();
+                txtTenTH.Text = r.Cells["TenTH"].Value.ToString();
+                txtSize.Text = r.Cells["Size"].Value.ToString();
+                txtMauSac.Text = r.Cells["MauSac"].Value.ToString();
+                txtDonGia.Text = r.Cells["DonGia"].Value.ToString();
+                txtSoLuongTon.Text = r.Cells["SoLuongTon"].Value.ToString();
+
+                dgvProduct.ClearSelection();
+                dgvProduct.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDonGia_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

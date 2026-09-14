@@ -16,7 +16,7 @@ namespace Presentation
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Chạy form Login trước
+            //Chạy form Login trước
             LoginUI login = new LoginUI();
             if (login.ShowDialog() == DialogResult.OK)
             {

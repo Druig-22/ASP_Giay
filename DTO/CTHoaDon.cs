@@ -10,18 +10,24 @@ namespace DTO
     {
         public string MaHD { get; set; }
         public string MaGiay { get; set; }
-        public int SoLuong { get; set; }
+        public int SoLuongBan { get; set; }        // Đổi tên cho khớp với DB
         public decimal DonGiaBan { get; set; }
         public float GiamGia { get; set; }
 
-        public CTHoaDon(string maHD, string maGiay, int soLuong, decimal donGia, float giamGia)
+        // 
+        public decimal ThanhTienBan
+        {
+            get { return DonGiaBan * SoLuongBan * (decimal)(1 - GiamGia); }
+        }
+
+        // Constructor mới khớp với thuộc tính mới
+        public CTHoaDon(string maHD, string maGiay, int soLuongBan, decimal donGiaBan, float giamGia)
         {
             MaHD = maHD;
             MaGiay = maGiay;
-            SoLuong = soLuong;
-            DonGiaBan = donGia;
+            SoLuongBan = soLuongBan;
+            DonGiaBan = donGiaBan;
             GiamGia = giamGia;
         }
     }
 }
-

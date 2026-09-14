@@ -51,6 +51,7 @@ namespace Presentation
                 Form1 main = new Form1();
                 main.ShowDialog();
                 this.Show();
+
             }
             else
             {
